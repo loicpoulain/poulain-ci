@@ -1,0 +1,67 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/loicpoulain/micro-rootfs.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/dev</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.CloneOption>
+        <shallow>false</shallow>
+        <noTags>false</noTags>
+        <reference></reference>
+        <timeout>30</timeout>
+        <honorRefspec>false</honorRefspec>
+      </hudson.plugins.git.extensions.impl.CloneOption>
+      <hudson.plugins.git.extensions.impl.CheckoutOption>
+        <timeout>26</timeout>
+      </hudson.plugins.git.extensions.impl.CheckoutOption>
+    </extensions>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command># Build
+
+ARCH=arm64 make buildroot-config
+make -C buildroot/arm64 -j$(nproc)
+
+ARCH=arm make buildroot-config
+make -C buildroot/arm -j$(nproc)
+
+ARCH=x86 make buildroot-config
+make -C buildroot/x86 -j$(nproc)</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command># Publish cpio
+
+scp buildroot/arm/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-arm.cpio.gz
+scp buildroot/arm64/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-aarch64.cpio.gz
+scp buildroot/x86/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-x86.cpio.gz
+
+# Publis ext2
+scp buildroot/arm/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-arm.ext2.gz
+scp buildroot/arm64/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-aarch64.ext2.gz
+scp buildroot/x86/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-x86.ext2.gz</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

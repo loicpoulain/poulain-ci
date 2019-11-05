@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+
+  jenkins:
+    container_name: jenkins
+    hostname: jenkins
+    extends:
+      file: ./jenkins/docker-compose.yml
+      service: jenkins
+    build:
+      args:
+        admin_username: admin
+        admin_password: password
+        http_port: 8080
+        extra_packages: "flex libncurses-dev bison libssl-dev libelf-dev file build-essential gcc gcc-arm-linux-gnueabi gcc-aarch64-linux-gnu bc lava-tool ftp gettext-base cpio rsync"
+        plugins: "git mailer git-parameter build-timeout publish-over-ftp"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./jenkins_home/jobs:/var/jenkins_home/jobs
+      - ./jenkins_ssh:/var/lib/jenkins/.ssh
