@@ -1,5 +1,6 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
+  <actions/>
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties/>
@@ -28,6 +29,7 @@
       <hudson.plugins.git.extensions.impl.CheckoutOption>
         <timeout>26</timeout>
       </hudson.plugins.git.extensions.impl.CheckoutOption>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
   <canRoam>true</canRoam>
@@ -52,14 +54,14 @@ make -C buildroot/x86 -j$(nproc)</command>
     <hudson.tasks.Shell>
       <command># Publish cpio
 
-scp buildroot/arm/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-arm.cpio.gz
-scp buildroot/arm64/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-aarch64.cpio.gz
-scp buildroot/x86/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-x86.cpio.gz
+scp buildroot/arm/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-dev-arm.cpio.gz
+scp buildroot/arm64/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-dev-aarch64.cpio.gz
+scp buildroot/x86/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-dev-x86.cpio.gz
 
 # Publis ext2
-scp buildroot/arm/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-arm.ext2.gz
-scp buildroot/arm64/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-aarch64.ext2.gz
-scp buildroot/x86/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-DEV-x86.ext2.gz</command>
+scp buildroot/arm/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-dev-arm.ext2.gz
+scp buildroot/arm64/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-dev-aarch64.ext2.gz
+scp buildroot/x86/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-dev-x86.ext2.gz</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>

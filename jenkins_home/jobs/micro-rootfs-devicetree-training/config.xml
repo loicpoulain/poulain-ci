@@ -13,7 +13,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/master</name>
+        <name>*/devicetree-training</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -30,28 +30,11 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command># Build
-
-ARCH=arm64 make buildroot-config
-make -C buildroot/arm64 -j$(nproc)
-
-ARCH=arm make buildroot-config
-make -C buildroot/arm -j$(nproc)
-
-ARCH=x86 make buildroot-config
-make -C buildroot/x86 -j$(nproc)</command>
+      <command>ARCH=arm64 make buildroot-config
+make -C buildroot/arm64 -j$(nproc)</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command># Publish cpio
-
-scp buildroot/arm/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-arm.cpio.gz
-scp buildroot/arm64/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-aarch64.cpio.gz
-scp buildroot/x86/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-x86.cpio.gz
-
-# Publis ext2
-scp buildroot/arm/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-arm.ext2.gz
-scp buildroot/arm64/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-aarch64.ext2.gz
-scp buildroot/x86/images/rootfs.ext2.gz loic.poulain@people.linaro.org:~/public_html/micro-rootfs/micro-rootfs-x86.ext2.gz</command>
+      <command>scp buildroot/arm64/images/rootfs.cpio.gz loic.poulain@people.linaro.org:~/public_html/devicetree/micro-rootfs-aarch64.cpio.gz</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>

@@ -42,6 +42,10 @@
       <command># All builtin
 echo &quot;CONFIG_MODULES=n&quot; &gt; kernel/configs/builtin.config
 
+# Build for arm
+ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- make defconfig kvm_guest.config builtin.config
+ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- make Image.gz vmlinux -j$(nproc)
+
 # Build for arm64
 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make defconfig kvm_guest.config builtin.config
 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make Image.gz vmlinux -j$(nproc)
@@ -58,9 +62,12 @@ cp .config arch/x86_64/boot/config
     <hudson.tasks.Shell>
       <command># Publish
 kernel_version=$(make kernelversion)
+
+scp arch/arm/boot/Image.gz loic.poulain@people.linaro.org:~/public_html/linux/Image-${kernel_version}-arm.gz
 scp arch/arm64/boot/Image.gz loic.poulain@people.linaro.org:~/public_html/linux/Image-${kernel_version}-aarch64.gz
 scp arch/x86_64/boot/bzImage loic.poulain@people.linaro.org:~/public_html/linux/bzImage-${kernel_version}-x86_64
 
+scp arch/arm/boot/config loic.poulain@people.linaro.org:~/public_html/linux/config-${kernel_version}-arm
 scp arch/arm64/boot/config loic.poulain@people.linaro.org:~/public_html/linux/config-${kernel_version}-aarch64
 scp arch/x86_64/boot/config loic.poulain@people.linaro.org:~/public_html/linux/config-${kernel_version}-x86_64
 
